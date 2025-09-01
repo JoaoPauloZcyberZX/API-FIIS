@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Top FIIs - Dividendos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: #fff;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fundos Imobiliários - Maiores Dividendos</h1>
+  <button onclick="loadData()">🔁 Atualizar agora</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Ticker</th>
+        <th>Preço</th>
+        <th>Dividend Yield</th>
+        <th>Último Dividendo</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody id="fiis-table-body">
+      <tr><td colspan="5">Carregando...</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    async function loadData() {
+      const tbody = document.getElementById('fiis-table-body');
+      tbody.innerHTML = '<tr><td colspan="5">Carregando...</td></tr>';
+      try {
+        const res = await fetch('/api/fiis');
+        const data = await res.json();
+        tbody.innerHTML = '';
+        data.forEach(fii => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${fii.ticker}</td>
+            <td>R$ ${fii.price?.toFixed(2) || '-'}</td>
+            <td>${(fii.dividend_yield * 100).toFixed(2)}%</td>
+            <td>R$ ${fii.last_dividend?.toFixed(2) || '-'}</td>
+            <td>${fii.last_dividend_date || '-'}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+        tbody.innerHTML = '<tr><td colspan="5">Erro ao carregar dados.</td></tr>';
+      }
+    }
+
+    // Carrega ao iniciar
+    loadData();
+
+    // Atualização automática a cada 1 minuto
+    setInterval(loadData, 60000);
+  </script>
+</body>
+</html>
