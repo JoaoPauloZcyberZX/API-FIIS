@@ -1,32 +1,24 @@
-name: Build com Conda
+name: Python Package using Conda
 
-on:
-  push:
-    branches: [principal]
-  pull_request:
-    branches: [principal]
+on: [push]
 
 jobs:
-  build:
+  build-linux:
     runs-on: ubuntu-latest
-
+    strategy:
+      max-parallel: 5
     steps:
-    - name: Clonar o repositório
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: fiis-api
+          environment-file: ambiente.yml
+          python-version: 3.10
+          auto-activate-base: false
 
-    - name: Instalar Miniconda
-      uses: conda-incubator/setup-miniconda@v2
-      with:
-        auto-update-conda: true
-        python-version: 3.11
-        environment-file: environment.yml
-        activate-environment: fiis-api
-
-    - name: Verificar instalação
-      run: |
-        python --version
-        pip list
-
-    - name: Rodar a aplicação (opcional)
-      run: |
-        python app.py  # ou o nome correto do seu arquivo
+      - name: Verificar Conda e Python
+        run: |
+          conda info
+          python --version
