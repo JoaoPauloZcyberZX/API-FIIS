@@ -1,5 +1,6 @@
 name: fiis-api
 channels:
+  - conda-forge
   - defaults
 dependencies:
   - python=3.10
@@ -9,4 +10,3 @@ dependencies:
   - pip:
       - fastapi
       - uvicorn
-
