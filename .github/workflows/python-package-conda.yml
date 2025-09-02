@@ -1,0 +1,27 @@
+name: Python Package using Conda
+
+on: [push]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-activate-base: false
+          environment-file: environment.yml
+          activate-environment: fiis-api
+          python-version: 3.11
+
+      - name: Verificar Conda e Python
+        shell: bash -l {0}
+        run: |
+          conda info
+          conda list
+          python --version
