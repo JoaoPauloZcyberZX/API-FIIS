@@ -1,24 +1,11 @@
-name: Python Package using Conda
-
-on: [push]
-
-jobs:
-  build-linux:
-    runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 5
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          activate-environment: fiis-api
-          environment-file: ambiente.yml
-          python-version: 3.10
-          auto-activate-base: false
-
-      - name: Verificar Conda e Python
-        run: |
-          conda info
-          python --version
+name: fiis-api
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pandas
+  - numpy
+  - pip:
+      - fastapi
+      - uvicorn
