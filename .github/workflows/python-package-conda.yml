@@ -11,7 +11,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v3
         with:
           activate-environment: fiis-api
-          environment-file: ambiente.yml
+          environment-file: environment.yml
           python-version: 3.10
           auto-activate-base: false
       - name: Verificar Conda e Python
