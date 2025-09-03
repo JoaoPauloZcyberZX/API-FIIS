@@ -1,20 +1,6 @@
-name: Python Package using Conda
-
-on: [push]
-
-jobs:
-  build-linux:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          activate-environment: fiis-api
-          environment-file: environment.yml
-          python-version: 3.13
-          auto-activate-base: false
-      - name: Verificar Conda e Python
-        run: |
-          conda info
-          python --version
+- name: Configurar canais Conda
+  run: |
+    conda config --remove-key channels || true
+    conda config --add channels defaults
+    conda config --add channels conda-forge
+    conda config --set channel_priority strict
