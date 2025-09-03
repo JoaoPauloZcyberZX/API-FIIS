@@ -13,9 +13,10 @@ jobs:
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v2
         with:
-          auto-update-conda: true
           activate-environment: base
-          use-mamba: false  # Você pode usar true se quiser mais velocidade com mamba
+          auto-update-conda: false   # ← desativa atualização (corrige o erro)
+          use-mamba: false
+          miniconda-version: "latest"
 
       - name: Configurar canais Conda
         run: |
@@ -27,11 +28,10 @@ jobs:
       - name: Criar ambiente Conda
         run: conda create -n novo_ambiente python=3.10 -y
 
-      - name: Ativar ambiente Conda
+      - name: Ativar ambiente e verificar Python
         run: conda activate novo_ambiente && python --version
         shell: bash -l {0}
 
-      # Exemplo: Rodar script Python
       - name: Executar script principal
         run: conda activate novo_ambiente && python APIFIISPUCPR.py
         shell: bash -l {0}
