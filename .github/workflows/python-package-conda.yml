@@ -32,7 +32,7 @@ jobs:
         shell: bash -l {0}
         run: |
           echo "Iniciando Flask com timeout..."
-          timeout 15s python APIFIISPUCPR.py
+          timeout 15s python APIFIISPUCPR.py || [[ $? == 124 ]]
 
       - name: Finalização
         run: echo "✅ Workflow finalizado com sucesso!"
