@@ -7,4 +7,6 @@ dependencies:
   - requests
   - pandas
   - matplotlib
+  - flask
+
 
