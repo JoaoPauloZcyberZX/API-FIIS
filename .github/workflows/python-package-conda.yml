@@ -21,11 +21,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements.txt  # Verifique o caminho se necessário
 
       - name: Run tests
         run: |
-          pytest
+          pytest  # Remova ou ajuste se não tiver testes
 
   deploy:
     needs: build
@@ -37,6 +37,4 @@ jobs:
 
       - name: Deploy application
         run: |
-          echo "Aqui você coloca o comando para deploy, por exemplo:"
-          echo "scp -r ./app user@server:/var/www/app"
-          echo "ou qualquer outro script que faça o deploy da sua aplicação"
+          echo "Coloque aqui o comando real de deploy"
