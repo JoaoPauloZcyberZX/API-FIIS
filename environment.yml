@@ -1,13 +1,9 @@
-name: fiis-api
+name: novo_ambiente
 channels:
-  - conda create -n novo_ambiente python=3.10
   - defaults
+  - conda-forge
 dependencies:
   - python=3.10
+  - requests
   - pandas
-  - numpy
-  - pip
-  - pip:
-      - fastapi
-      - uvicorn
-
+  - matplotlib
