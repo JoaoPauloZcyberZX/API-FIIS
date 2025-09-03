@@ -1,4 +1,4 @@
-name: novo_ambiente
+name: api_fiis_env
 channels:
   - defaults
   - conda-forge
@@ -7,3 +7,4 @@ dependencies:
   - requests
   - pandas
   - matplotlib
+
