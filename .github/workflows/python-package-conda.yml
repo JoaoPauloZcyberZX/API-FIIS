@@ -1,6 +1,37 @@
-- name: Configurar canais Conda
-  run: |
-    conda config --remove-key channels || true
-    conda config --add channels defaults
-    conda config --add channels conda-forge
-    conda config --set channel_priority strict
+name: Teste Conda
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v2
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          activate-environment: base
+          use-mamba: false  # Você pode usar true se quiser mais velocidade com mamba
+
+      - name: Configurar canais Conda
+        run: |
+          conda config --remove-key channels || true
+          conda config --add channels defaults
+          conda config --add channels conda-forge
+          conda config --set channel_priority strict
+
+      - name: Criar ambiente Conda
+        run: conda create -n novo_ambiente python=3.10 -y
+
+      - name: Ativar ambiente Conda
+        run: conda activate novo_ambiente && python --version
+        shell: bash -l {0}
+
+      # Exemplo: Rodar script Python
+      - name: Executar script principal
+        run: conda activate novo_ambiente && python APIFIISPUCPR.py
+        shell: bash -l {0}
