@@ -1,38 +1,42 @@
-name: CI - Rodar API Flask com timeout
+name: Continuous Delivery
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  flask-api-check:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Instalar Miniconda e ambiente Conda
-        uses: conda-incubator/setup-miniconda@v2
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          auto-activate-base: true
-          environment-file: environment.yml
-          activate-environment: api_fiis_env
-          miniconda-version: "latest"
+          python-version: '3.10'
 
-      - name: Verificar Python e pacotes
-        shell: bash -l {0}
+      - name: Install dependencies
         run: |
-          python --version
-          conda list
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Rodar Flask com timeout de 15s
-        shell: bash -l {0}
+      - name: Run tests
         run: |
-          echo "Iniciando Flask com timeout..."
-          timeout 15s python APIFIISPUCPR.py || [[ $? == 124 ]]
+          pytest
 
-      - name: Finalização
-        run: echo "✅ Workflow finalizado com sucesso!"
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy application
+        run: |
+          echo "Aqui você coloca o comando para deploy, por exemplo:"
+          echo "scp -r ./app user@server:/var/www/app"
+          echo "ou qualquer outro script que faça o deploy da sua aplicação"
