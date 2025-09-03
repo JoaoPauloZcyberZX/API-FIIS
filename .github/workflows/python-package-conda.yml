@@ -1,30 +1,38 @@
-name: Teste Conda
+name: CI - Rodar API Flask com timeout
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  build:
+  flask-api-check:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout do código
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Set up Miniconda
+      - name: Instalar Miniconda e ambiente Conda
         uses: conda-incubator/setup-miniconda@v2
         with:
-          auto-update-conda: false
-          use-mamba: false
+          auto-activate-base: true
+          environment-file: environment.yml
+          activate-environment: api_fiis_env
           miniconda-version: "latest"
-          auto-activate-base: false   # <- IMPORTANTE! Não ativa 'base'
 
-      - name: Criar ambiente Conda com environment.yml
-        run: conda env create -f environment.yml
-
-      - name: Ativar ambiente e verificar Python
-        run: conda activate api_fiis_env && python --version
+      - name: Verificar Python e pacotes
         shell: bash -l {0}
+        run: |
+          python --version
+          conda list
 
-      - name: Executar script principal
-        run: conda activate api_fiis_env && python APIFIISPUCPR.py
+      - name: Rodar Flask com timeout de 15s
         shell: bash -l {0}
+        run: |
+          echo "Iniciando Flask com timeout..."
+          timeout 15s python APIFIISPUCPR.py
+
+      - name: Finalização
+        run: echo "✅ Workflow finalizado com sucesso!"
