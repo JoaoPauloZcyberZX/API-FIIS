@@ -24,9 +24,13 @@ jobs:
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
 
-            - name: Run tests
+      - name: Run tests
         shell: bash -l {0}
-        run: pytest
+        run: |
+          which python
+          python --version
+          conda list
+          pytest
 
           which python
           python --version
