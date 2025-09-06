@@ -8,3 +8,4 @@ dependencies:
   - matplotlib
   - flask
   - pytest
+  - pytest-flask
