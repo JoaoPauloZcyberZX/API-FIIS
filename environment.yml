@@ -1,11 +1,10 @@
 name: api_fiis_env
 channels:
   - conda-forge
-  - defaults
 dependencies:
   - python=3.10
   - requests
   - pandas
   - matplotlib
   - flask
-
+  - pytest
