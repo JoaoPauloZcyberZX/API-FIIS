@@ -1,3 +1,9 @@
+- name: Debug environment
+  run: |
+    conda info
+    conda list
+    echo "PATH: $PATH"
+
 import pytest
 from APIFIISPUCPR import app
 
