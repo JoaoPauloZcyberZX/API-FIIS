@@ -24,9 +24,10 @@ jobs:
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
 
-      - name: Run tests
-        shell: bash -l {0}  # <- shell adequado para ativar Conda
-        run: |
+            - name: Run tests
+        shell: bash -l {0}
+        run: pytest
+
           which python
           python --version
           conda list
