@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__, static_folder='static')
 
-# ✅ Coloque seu token da BRAPI aqui (cadastre-se em https://brapi.dev)
+#token da BRAPI aqui (cadastre-se em https://brapi.dev)
 TOKEN = "48ifJA1gcFqC68DkECskTk"
 
 # Lista dos fundos com maiores dividendos
@@ -41,3 +41,4 @@ def serve_static_file(path):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
