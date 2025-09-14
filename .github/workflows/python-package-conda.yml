@@ -19,7 +19,10 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: echo "No requirements.txt found, skipping dependencies"
+        run: |
+          pip install pytest
+          # se tiver libs extras, adicione aqui
+          # pip install flask requests pandas
 
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
