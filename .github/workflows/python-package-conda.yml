@@ -20,9 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pytest
-          # se tiver libs extras, adicione aqui
-          # pip install flask requests pandas
+          pip install flask pytest
 
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
